@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>BIG / SMALL Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">HISTORY INTELLIGENCE</p>
+        <h1>BIG <span>/</span> SMALL</h1>
+        <p class="muted">History analyzer & pattern lab</p>
+      </div>
+      <button id="themeBtn" class="btn btn-secondary" type="button">☀️ Theme</button>
+    </header>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / INPUT</p>
+          <h2>Enter History</h2>
+        </div>
+        <span class="pill">B / S supported</span>
+      </div>
+      <p class="muted">B S B S, BIG SMALL, ya compact format BSSBSB paste karo.</p>
+      <textarea id="historyInput" placeholder="Example: B S B B S S B S B B S B"></textarea>
+      <div class="actions">
+        <button id="analyzeBtn" class="btn btn-primary" type="button">Analyze History</button>
+        <button id="clearInputBtn" class="btn btn-secondary" type="button">Clear Input</button>
+      </div>
+      <p id="inputMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <p class="stat-label">TOTAL RESULTS</p>
+        <strong id="totalCount">0</strong>
+        <span class="muted">History size</span>
+      </article>
+      <article class="stat-card">
+        <p class="stat-label">BIG RESULTS</p>
+        <strong id="bigCount" class="big-text">0</strong>
+        <span id="bigPercent" class="muted">0.0%</span>
+      </article>
+      <article class="stat-card">
+        <p class="stat-label">SMALL RESULTS</p>
+        <strong id="smallCount" class="small-text">0</strong>
+        <span id="smallPercent" class="muted">0.0%</span>
+      </article>
+      <article class="stat-card">
+        <p class="stat-label">CURRENT STREAK</p>
+        <strong id="streakValue">—</strong>
+        <span id="streakLabel" class="muted">No streak yet</span>
+      </article>
+    </section>
+
+    <!-- NEXT RESULT IS ITS OWN SECTION -->
+    <section class="panel next-panel" id="nextResultSection">
+      <p class="eyebrow">02 / NEXT RESULT ANALYSIS</p>
+      <h2>Next Result Analysis</h2>
+      <p class="muted">Current history ke basis par models ka tentative assessment.</p>
+
+      <div id="nextResultCard" class="next-result-card neutral">
+        <span class="result-kicker">TENTATIVE MODEL OUTPUT</span>
+        <strong id="nextResultValue">WAITING FOR HISTORY</strong>
+        <span id="nextResultVotes" class="vote-line">History analyze karne ke baad yahan result dikhega.</span>
+      </div>
+
+      <div class="reason-box">
+        <h3>Ye result kyun suggest hua?</h3>
+        <p id="nextResultReason" class="muted">
+          Pehle history enter karke Analyze History dabao.
+        </p>
+      </div>
+
+      <div class="two-col explanation-grid">
+        <div class="mini-panel">
+          <h3>Supporting models</h3>
+          <div id="supportingModels" class="reason-list">
+            <p class="muted">Analysis ke baad yahan dikhenge.</p>
+          </div>
+        </div>
+        <div class="mini-panel">
+          <h3>Different opinion / no signal</h3>
+          <div id="otherModels" class="reason-list">
+            <p class="muted">Analysis ke baad yahan dikhenge.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="notice">
+        Note: Ye model-based estimate hai, certainty ya guaranteed prediction nahi.
+        Historical frequency agla result confirm nahi karti.
+      </p>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">03 / HISTORY SUMMARY</p>
+      <h2>History Overview</h2>
+      <div class="summary-list">
+        <div><span>Latest result</span><strong id="latestResult">—</strong></div>
+        <div><span>Recent 10 results</span><strong id="recentTrend">No history yet</strong></div>
+        <div><span>Longest BIG streak</span><strong id="longBig">0</strong></div>
+        <div><span>Longest SMALL streak</span><strong id="longSmall">0</strong></div>
+      </div>
+      <div class="actions">
+        <button id="addBigBtn" class="btn btn-secondary" type="button">+ Add BIG</button>
+        <button id="addSmallBtn" class="btn btn-secondary" type="button">+ Add SMALL</button>
+        <button id="undoBtn" class="btn btn-secondary" type="button">Undo Last</button>
+        <button id="exportBtn" class="btn btn-secondary" type="button">Export JSON</button>
+        <button id="resetBtn" class="btn btn-danger" type="button">Reset All</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">04 / MODEL DETAILS</p>
+      <h2>Individual Model Analysis</h2>
+      <p class="muted">Har model ki direction aur uski wajah alag dekho.</p>
+      <div id="modelResults" class="model-grid">
+        <p class="muted">History analyze karne ke baad model details yahan aayengi.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">05 / BACKTEST</p>
+      <h2>Historical Backtest</h2>
+      <p class="muted">Purane rounds par model ke historical matches. Future accuracy ka promise nahi.</p>
+      <div id="backtestResults">
+        <p class="muted">Backtest ke liye kam se kam 12 results enter karo.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">06 / TIMELINE</p>
+      <h2>Full History Timeline</h2>
+      <div id="historyTimeline" class="history-list">
+        <p class="muted">Abhi history empty hai.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      BIG / SMALL ANALYZER · Historical analysis only
+    </footer>
+  </main>
+</body>
+</html>
